@@ -1,23 +1,22 @@
 import { Button, Flex, Input, Spacer } from "@chakra-ui/react";
-import { AddIcon } from "@chakra-ui/icons";
-import { useRef } from "react";
+import { AddIcon, ChevronDownIcon, ChevronUpIcon } from "@chakra-ui/icons";
+import { useEffect, useRef, useState } from "react";
 import { notesAction } from "../store/notes-slice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
-function InputNote() {
+function InputNote(props) {
   const inputNote = useRef();
+  const dateRef = useRef();
   const dispatch = useDispatch();
-  //   console.log([
-  //     ...new Date(new Date())
-  //       .toLocaleString()
-  //       .toString()
-  //       .split(",")[0]
-  //       .split("/"),
-  //   ]);
+  const sortedAscending = useSelector((state) => state.sortedAscending);
+  const [sortingOrd, setOrder] = useState();
+  useEffect(() => {
+    setOrder(sortedAscending);
+  }, [sortedAscending]);
   const handelInput = () => {
     const noteObj = {
       note: inputNote.current.value,
-      dateCreated: new Date(new Date()).toLocaleString(),
+      dateCreated: dateRef.current.value,
       id: Math.random(),
     };
     dispatch(notesAction.addNote(noteObj));
@@ -34,6 +33,7 @@ function InputNote() {
         placeholder="Enter note to make..."
         mr="2"
       />
+      <Input type="date" w="44" ref={dateRef} placeholder="Phone number" />
       <Spacer />
       <Button
         onClick={handelInput}
@@ -45,8 +45,16 @@ function InputNote() {
       >
         Add
       </Button>
-      <Button mr="4" colorScheme="teal" w="40" variant="outline">
-        Sort
+      <Button
+        onClick={() => {
+          sortedAscending ? props.SortDscNotesList() : props.SortAscNotesList();
+        }}
+        colorScheme="teal"
+        w="40"
+        as={Button}
+        rightIcon={sortingOrd ? <ChevronDownIcon /> : <ChevronUpIcon />}
+      >
+        sort
       </Button>
     </Flex>
   );
