@@ -1,4 +1,3 @@
-import { useSelector } from "react-redux";
 import {
   Box,
   Button,
@@ -15,12 +14,12 @@ import React, { useEffect, useState } from "react";
 import Modal from "./modal";
 import { notesAction } from "../store/notes-slice";
 import { useDispatch } from "react-redux";
-// import { notesAction } from "../store/notes-slice";
-
+import { useToast } from "@chakra-ui/react";
 function NotesList(props) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [editValue, setEditValue] = useState({});
   const dispatch = useDispatch();
+  const toast = useToast();
   useEffect(() => {}, [props.notesList]);
 
   if (props.notesList && props.notesList.length === 0) {
@@ -62,7 +61,16 @@ function NotesList(props) {
                       />
                       <Button
                         pl="2"
-                        onClick={() => dispatch(notesAction.deleteNote(el.id))}
+                        onClick={() => {
+                          dispatch(notesAction.deleteNote(el.id));
+                          toast({
+                            title: "Deleted successfully!",
+                            description: "Note deleted successfully!",
+                            status: "success",
+                            duration: 3000,
+                            isClosable: true,
+                          });
+                        }}
                         rightIcon={<DeleteIcon />}
                         m="2"
                       />

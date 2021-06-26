@@ -14,18 +14,37 @@ import {
 import { useRef } from "react";
 import { useDispatch } from "react-redux";
 import { notesAction } from "../store/notes-slice";
+import { useToast } from "@chakra-ui/react";
+
 const EditModal = (props) => {
+  const toast = useToast();
   const updateNoteRef = useRef();
   const dispatch = useDispatch();
 
   const saveInput = () => {
+    if (!updateNoteRef.current.value) {
+      toast({
+        title: "Failed to edit",
+        description: "Please enter a note",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+      });
+      return;
+    }
     dispatch(
       notesAction.updateNote({
         id: props.value.id,
         updatedValue: updateNoteRef.current.value,
       })
     );
-    console.log(updateNoteRef.current.value);
+    toast({
+      title: "Edited!",
+      description: "note edited successfully",
+      status: "success",
+      duration: 3000,
+      isClosable: true,
+    });
     props.onClose();
   };
 

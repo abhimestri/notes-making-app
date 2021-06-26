@@ -31,29 +31,3 @@ const notesSlice = createSlice({
 
 export const notesAction = notesSlice.actions;
 export default notesSlice;
-
-//sortNewest(state, action) {
-//   // state.notesList.map((el, i) => {
-//   //   console.log(a.dateCreated.toString().split(",")[0].split("/"));
-//   // });
-//   state.notesList = state.notesList.sort((a, b) => {
-//     return state.notesList.indexOf(a) - state.notesList.indexOf(b);
-//   });
-
-//   // state.notesList = state.notesList.sort((a, b) => {
-//   //   return (
-//   //     Number(a.dateCreated.toString().split(",")[0].split("/")[0]) -
-//   //       Number(b.dateCreated.toString().split(",")[0].split("/")[0]) &&
-//   //     Number(a.dateCreated.toString().split(",")[0].split("/")[1]) -
-//   //       Number(b.dateCreated.toString().split(",")[0].split("/")[1]) &&
-//   //     Number(a.dateCreated.toString().split(",")[0].split("/")[2]) &&
-//   //     Number(b.dateCreated.toString().split(",")[0].split("/")[2])
-//   //   );
-//   // });
-// },
-// sortNotes(state, action) {
-//   state.sortedAscending = !state.sortedAscending;
-//   state.notesList = state.notesList.sort((a, b) => {
-//     return state.notesList.indexOf(b) - state.notesList.indexOf(a);
-//   });
-// },
